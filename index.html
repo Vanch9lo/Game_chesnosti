@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Честная Игра</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .typing-animation {
+            overflow: hidden;
+            border-right: 2px solid #3b82f6;
+            white-space: nowrap;
+            animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #3b82f6; }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .slide-in-right {
+            animation: slideInRight 0.8s ease-out;
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .pulse-glow {
+            animation: pulseGlow 2s infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
+        }
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .bounce-in {
+            animation: bounceIn 0.6s ease-out;
+        }
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: 1; transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .choice-button {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .choice-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+        .choice-button:hover::before {
+            left: 100%;
+        }
+        .stat-change {
+            animation: statChange 1s ease-out;
+        }
+        @keyframes statChange {
+            0% { transform: scale(1); color: inherit; }
+            50% { transform: scale(1.2); color: #10b981; }
+            100% { transform: scale(1); color: inherit; }
+        }
+        .running-animation {
+            animation: running 2s infinite;
+        }
+        @keyframes running {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(10px); }
+        }
+        .heartbeat {
+            animation: heartbeat 1.5s infinite;
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 min-h-screen text-white">
+    <!-- Главное меню -->
+    <div id="main-menu" class="min-h-screen flex items-center justify-center">
+        <div class="text-center max-w-4xl mx-auto px-6">
+            <h1 class="text-6xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent pulse-glow">
+                Честная Игра
+            </h1>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto fade-in">
+                Спортивная драма о выборе между честью и победой. 2028 год. Твоя судьба в твоих руках.
+            </p>
+            <div class="space-y-4">
+                <button onclick="showEpisodeSelect()" class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-lg text-lg font-semibold transition-all transform hover:scale-105 bounce-in">
+                    Начать игру
+                </button>
+                <div class="text-sm text-gray-400 slide-in-left">
+                    <p>Жанр: Интерактивная драма / Спортивный симулятор</p>
+                    <p>Время прохождения: ~30 минут за эпизод</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Выбор эпизода -->
+    <div id="episode-select" class="hidden min-h-screen flex items-center justify-center">
+        <div class="text-center max-w-6xl mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-8 text-white">Выберите эпизод</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <!-- Эпизод 1 -->
+                <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-6 border border-slate-600 hover:border-blue-500 transition-all transform hover:scale-105">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl mr-3">🏃‍♂️</span>
+                        <h3 class="text-2xl font-bold text-blue-400">Эпизод 1</h3>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-3 text-white">Первый круг</h4>
+                    <p class="text-gray-300 mb-4 text-left">
+                        Алекс Рейн получает приглашение в ГЛЧС. Выбор тренера, тайные предложения и первые моральные дилеммы. 
+                        Завершается отборочным забегом, который определит дальнейшую судьбу.
+                    </p>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-sm text-gray-400">⏱️ ~20 минут</span>
+                        <span class="text-sm text-green-400" id="episode1-status">✓ Доступен</span>
+                    </div>
+                    <button onclick="startEpisode(1)" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-semibold transition-all">
+                        Играть эпизод 1
+                    </button>
+                </div>
+
+                <!-- Эпизод 2 -->
+                <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-6 border border-slate-600 hover:border-purple-500 transition-all transform hover:scale-105">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl mr-3">🏆</span>
+                        <h3 class="text-2xl font-bold text-purple-400">Эпизод 2</h3>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-3 text-white">Под кожей</h4>
+                    <p class="text-gray-300 mb-4 text-left">
+                        Лагерь ГЛЧС в Альпах. Нейросканирование, новые персонажи и глубокое расследование. 
+                        Раскрой заговор Теневого Фонда и сделай выбор между честью и целью.
+                    </p>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-sm text-gray-400">⏱️ ~25 минут</span>
+                        <span class="text-sm text-green-400" id="episode2-status">✓ Доступен</span>
+                    </div>
+                    <button onclick="startEpisode(2)" id="episode2-button" class="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-lg font-semibold transition-all">
+                        Играть эпизод 2
+                    </button>
+                </div>
+            </div>
+
+            <!-- Прогресс игрока -->
+            <div class="bg-black/30 rounded-lg p-6 mb-6">
+                <h3 class="text-xl font-bold mb-4 text-white">Ваш прогресс</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div class="bg-slate-700 rounded-lg p-3">
+                        <div class="text-gray-400">Пройдено эпизодов</div>
+                        <div class="text-2xl font-bold text-blue-400" id="completed-episodes">0/2</div>
+                    </div>
+                    <div class="bg-slate-700 rounded-lg p-3">
+                        <div class="text-gray-400">Лучшая концовка</div>
+                        <div class="text-lg font-semibold text-green-400" id="best-ending">Не пройдено</div>
+                    </div>
+                    <div class="bg-slate-700 rounded-lg p-3">
+                        <div class="text-gray-400">Общее время игры</div>
+                        <div class="text-lg font-semibold text-yellow-400" id="total-playtime">0 мин</div>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="backToMainMenu()" class="bg-gray-600 hover:bg-gray-700 px-6 py-2 rounded-lg transition-all">
+                ← Назад в меню
+            </button>
+        </div>
+    </div>
+
+    <!-- Аудио элементы - упрощенная версия для надежности -->
+    <audio id="calm-music" loop preload="auto">
+        <!-- Будем использовать программно генерируемую музыку -->
+    </audio>
+    
+    <audio id="epic-music" loop preload="auto">
+        <!-- Будем использовать программно генерируемую музыку -->
+    </audio>
+    
+    <audio id="tension-music" loop preload="auto">
+        <!-- Будем использовать программно генерируемую музыку -->
+    </audio>
+    
+    <!-- Звуковые эффекты -->
+    <audio id="choice-sound" preload="auto"></audio>
+    <audio id="success-sound" preload="auto"></audio>
+    <audio id="tension-sound-effect" preload="auto"></audio>
+
+    <!-- Контроль громкости -->
+    <div id="audio-controls" class="fixed top-4 right-4 z-50 flex flex-col space-y-2">
+        <button id="mute-button" onclick="toggleMute()" class="bg-black/50 hover:bg-black/70 p-2 rounded-lg transition-all">
+            <span id="volume-icon">🔊</span>
+        </button>
+        <div class="bg-black/50 p-2 rounded-lg">
+            <input type="range" id="volume-slider" min="0" max="100" value="30" 
+                   onchange="adjustVolume(this.value)" 
+                   class="w-20 h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer">
+        </div>
+        <div class="text-xs text-white text-center bg-black/50 px-2 py-1 rounded">
+            <span id="music-status">🎵 Спокойная</span>
+        </div>
+    </div>
+
+    <!-- Игровой экран -->
+    <div id="game-screen" class="hidden min-h-screen">
+        <!-- Статус бар -->
+        <div class="bg-black/50 p-4 flex justify-between items-center slide-in-right">
+            <div class="flex space-x-4">
+                <div class="flex items-center space-x-2">
+                    <span class="text-green-400 heartbeat">♥</span>
+                    <span>Здоровье: <span id="health" class="font-bold">100</span>%</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-blue-400">⚡</span>
+                    <span>Выносливость: <span id="stamina" class="font-bold">100</span>%</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-yellow-400">⭐</span>
+                    <span>Честь: <span id="honor" class="font-bold">0</span></span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-red-400">🎯</span>
+                    <span>Цель: <span id="goal" class="font-bold">0</span></span>
+                </div>
+            </div>
+            <div class="text-sm text-gray-400">
+                Эпизод <span id="episode">1</span>: <span id="scene-title">Утро в Линдене</span>
+            </div>
+        </div>
+
+        <!-- Основной контент -->
+        <div class="container mx-auto px-6 py-8 max-w-4xl">
+            <!-- Текст сцены -->
+            <div id="scene-text" class="bg-black/30 rounded-lg p-6 mb-6 min-h-[300px]">
+                <div id="narrative" class="text-lg leading-relaxed mb-4"></div>
+                <div id="dialogue" class="italic text-blue-200 mb-4"></div>
+            </div>
+
+            <!-- Варианты выбора -->
+            <div id="choices" class="space-y-3"></div>
+
+            <!-- Мини-игры -->
+            <div id="minigame" class="hidden bg-black/30 rounded-lg p-6 mb-6"></div>
+        </div>
+    </div>
+
+    <!-- Экран концовки -->
+    <div id="ending-screen" class="hidden min-h-screen flex items-center justify-center">
+        <div class="text-center max-w-4xl mx-auto px-6">
+            <h2 id="ending-title" class="text-4xl font-bold mb-6"></h2>
+            <div id="ending-text" class="text-lg text-gray-300 mb-8 leading-relaxed"></div>
+            <button onclick="restartGame()" class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-lg text-lg font-semibold transition-all">
+                Играть снова
+            </button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
